@@ -1,5 +1,5 @@
 import sys
-sys.path.append("/media/hdvision/jsaavedr/Research/git/tensorflow-2/")
+sys.path.append("/data/practica/otra/")
 import tensorflow as tf
 import datasets.data as data
 import utils.configuration as conf

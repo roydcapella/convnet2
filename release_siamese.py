@@ -5,7 +5,7 @@ to be used independently for feature extraction
 import os
 os.environ["CUDA_VISIBLE_DEVICES"]='1'
 import sys
-sys.path.append("/home/jsaavedr/Research/git/tensorflow-2/convnet2")
+sys.path.append("/data/practica/otra/")
 import tensorflow as tf
 from models import resnet
 import utils.configuration as conf

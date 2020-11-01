@@ -6,7 +6,7 @@
 """
 import tensorflow as tf
 import sys
-sys.path.append("/home/jsaavedr/Research/git/tensorflow-2/convnet2")
+sys.path.append("/data/practica/otra/")
 
 
 

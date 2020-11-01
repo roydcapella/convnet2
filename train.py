@@ -12,7 +12,7 @@ To use train.py, you will require to send the following parameters :
 
 import sys
 #set the convnet2 path
-sys.path.append("/home/jsaavedr/Research/git/tensorflow-2/convnet2")
+sys.path.append("/data/practica/otra/")
 import tensorflow as tf
 from models import resnet, uv_rois
 import datasets.data as data
