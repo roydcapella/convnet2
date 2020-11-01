@@ -1,5 +1,5 @@
 import sys
-sys.path.append("/content/drive/'My Drive'/DiplomadoIA/computer-vision/")
+sys.path.append("/content/drive/'My Drive'/DiplomadoIA/computer-vision/convnet2")
 import tensorflow as tf
 import datasets.data as data
 import utils.configuration as conf
