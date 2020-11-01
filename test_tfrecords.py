@@ -1,5 +1,5 @@
 import sys
-sys.path.append("/data/practica/otra/")
+sys.path.append("/content/drive/'My Drive'/DiplomadoIA/computer-vision/")
 import tensorflow as tf
 import datasets.data as data
 import utils.configuration as conf

@@ -3,7 +3,7 @@
 Description: Create tfrecords
 """
 import sys
-sys.path.append("/data/practica/otra/")
+sys.path.append("/content/drive/'My Drive'/DiplomadoIA/computer-vision/")
 import argparse
 import utils.configuration as conf
 import utils.imgproc as imgproc

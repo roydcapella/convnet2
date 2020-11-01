@@ -6,7 +6,7 @@
 """
 import tensorflow as tf
 import sys
-sys.path.append("/data/practica/otra/")
+sys.path.append("/content/drive/'My Drive'/DiplomadoIA/computer-vision/")
 
 
 
