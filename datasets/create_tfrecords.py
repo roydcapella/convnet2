@@ -2,8 +2,11 @@
 @author: jsaavedr
 Description: Create tfrecords
 """
+
+
+import os
 import sys
-sys.path.append("/content/drive/'My Drive'/DiplomadoIA/computer-vision/convnet2")
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import argparse
 import utils.configuration as conf
 import utils.imgproc as imgproc

@@ -68,7 +68,8 @@ def read_data_from_file(str_path, dataset = "train" , shuf = True):
     """read data from text files
     and apply shuffle by default 
     """            
-    datafile = os.path.join(str_path, dataset + ".txt")    
+    datafile = os.path.join(str_path, dataset + ".txt") 
+    print (datafile)   
     assert os.path.exists(datafile)        
     # reading data from files, line by line
     with open(datafile) as file :        

@@ -9,7 +9,7 @@ it uses a generator for training and testing data
 import os
 #os.environ["CUDA_VISIBLE_DEVICES"]='1'
 import sys
-sys.path.append("/content/drive/'My Drive'/DiplomadoIA/computer-vision/convnet2")
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '.')))
 import tensorflow as tf
 from models import resnet
 import datasets.datagenerator as datagenerator

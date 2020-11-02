@@ -1,5 +1,4 @@
 import sys
-sys.path.append("/content/drive/'My Drive'/DiplomadoIA/computer-vision/convnet2")
 import tensorflow as tf
 import datasets.data as data
 import utils.configuration as conf
@@ -7,6 +6,9 @@ import numpy as np
 import argparse
 import os
 import matplotlib.pyplot as plt
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '.')))
+
 
 """
 This script test the data stored in a tfrecord file. It needs a config file to read the data_dir in order to locate the 

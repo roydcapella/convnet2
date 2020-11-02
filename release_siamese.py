@@ -3,9 +3,9 @@ release_siamese.py is used for splitting a siamese network into its two backbone
 to be used independently for feature extraction
 """
 import os
-os.environ["CUDA_VISIBLE_DEVICES"]='1'
 import sys
-sys.path.append("/content/drive/'My Drive'/DiplomadoIA/computer-vision/convnet2")
+os.environ["CUDA_VISIBLE_DEVICES"]='1'
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '.')))
 import tensorflow as tf
 from models import resnet
 import utils.configuration as conf

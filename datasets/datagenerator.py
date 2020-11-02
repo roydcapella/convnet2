@@ -2,7 +2,7 @@ import tensorflow as tf
 import numpy as np
 import os
 import sys
-sys.path.append("/content/drive/'My Drive'/DiplomadoIA/computer-vision/convnet2")
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import matplotlib.pyplot as plt
 import datasets.data as data
 

@@ -12,7 +12,7 @@ To use train.py, you will require to send the following parameters :
 
 import sys
 #modify the following line according to the locations where convnet2 is located
-sys.path.append("/content/drive/'My Drive'/DiplomadoIA/computer-vision/convnet2")
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '.')))
 import tensorflow as tf
 from models import simple
 from models import alexnet
