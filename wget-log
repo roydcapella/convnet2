@@ -1,24 +1,0 @@
---2020-11-02 04:12:16--  https://www.dropbox.com/s/c3h9e0o6ajydbao/clothing-small.zip
-Resolviendo www.dropbox.com (www.dropbox.com)... 162.125.5.1
-Conectando con www.dropbox.com (www.dropbox.com)[162.125.5.1]:443... conectado.
-Petición HTTP enviada, esperando respuesta... 301 Moved Permanently
-Localización: /s/raw/c3h9e0o6ajydbao/clothing-small.zip [siguiendo]
---2020-11-02 04:12:17--  https://www.dropbox.com/s/raw/c3h9e0o6ajydbao/clothing-small.zip
-Reutilizando la conexión con www.dropbox.com:443.
-Petición HTTP enviada, esperando respuesta... 302 Found
-Localización: https://uc9a9698c9419fd19d2f2193dd52.dl.dropboxusercontent.com/cd/0/inline/BCb4qFcq1MqNR0CjFCiQA7BQ2mcGv-oxGceR9tLu-2st2EEU4fw7WIbKbs6lJzxtXykuXtwoJMd6P9_sFKo3hREOkaq_ca23if5FQoi5vEGUDR3qsIS76sjAk5XeYOwQGPw/file# [siguiendo]
---2020-11-02 04:12:17--  https://uc9a9698c9419fd19d2f2193dd52.dl.dropboxusercontent.com/cd/0/inline/BCb4qFcq1MqNR0CjFCiQA7BQ2mcGv-oxGceR9tLu-2st2EEU4fw7WIbKbs6lJzxtXykuXtwoJMd6P9_sFKo3hREOkaq_ca23if5FQoi5vEGUDR3qsIS76sjAk5XeYOwQGPw/file
-Resolviendo uc9a9698c9419fd19d2f2193dd52.dl.dropboxusercontent.com (uc9a9698c9419fd19d2f2193dd52.dl.dropboxusercontent.com)... 162.125.5.15
-Conectando con uc9a9698c9419fd19d2f2193dd52.dl.dropboxusercontent.com (uc9a9698c9419fd19d2f2193dd52.dl.dropboxusercontent.com)[162.125.5.15]:443... conectado.
-Petición HTTP enviada, esperando respuesta... 302 Found
-Localización: /cd/0/inline2/BCaLiC7JozngklxwmBMLPsE9X-Z14LEYk5v1AdwIWRZ93iELqbtOVjfEJAwZX__WSEyETbMV3iib9CI_DS76hY7ko2YkDF3OvVbECyul26K4QR16aB2GZZbeYu4hWTYQZfTK2jKTbeveLP16MBnyoN-Nr96eRKmESeLkmnUivLKsBof1_pzr7rJ_kd6xVEjUbL5iUts7vDVRBHJ4IjIdLmgmcsao-vDXENHmIu1G72yP1sg9TyNyF5xfSbhW4Q5RBQdO7FQW__iWSjwgz53eR5rXO7myvaQgQG3sufQ_-cH1k1NpHh-XVPsekyRzGCjQJzWv5uVnzA801YHNoGM8gsGxnivHhU89d2McB9tQnp_ZjQ/file [siguiendo]
---2020-11-02 04:12:18--  https://uc9a9698c9419fd19d2f2193dd52.dl.dropboxusercontent.com/cd/0/inline2/BCaLiC7JozngklxwmBMLPsE9X-Z14LEYk5v1AdwIWRZ93iELqbtOVjfEJAwZX__WSEyETbMV3iib9CI_DS76hY7ko2YkDF3OvVbECyul26K4QR16aB2GZZbeYu4hWTYQZfTK2jKTbeveLP16MBnyoN-Nr96eRKmESeLkmnUivLKsBof1_pzr7rJ_kd6xVEjUbL5iUts7vDVRBHJ4IjIdLmgmcsao-vDXENHmIu1G72yP1sg9TyNyF5xfSbhW4Q5RBQdO7FQW__iWSjwgz53eR5rXO7myvaQgQG3sufQ_-cH1k1NpHh-XVPsekyRzGCjQJzWv5uVnzA801YHNoGM8gsGxnivHhU89d2McB9tQnp_ZjQ/file
-Reutilizando la conexión con uc9a9698c9419fd19d2f2193dd52.dl.dropboxusercontent.com:443.
-Petición HTTP enviada, esperando respuesta... 200 OK
-Longitud: 2878142864 (2,7G) [application/zip]
-Grabando a: “clothing-small.zip”
-
-clothing-small.zip    0%[                    ]  16,96M  3,87KB/s    eta 2d 4h  clothing-small.zip    0%[                    ]  20,01M  6,55KB/s    en 19m 38s 
-
-2020-11-02 04:31:57 (17,4 KB/s) - Error de lectura en el byte 20987033/2878142864 (Error en la función empuje.). Reintentando.
-

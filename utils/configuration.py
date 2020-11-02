@@ -36,6 +36,7 @@ class ConfigurationFile:
                 #test time sets when test is run (in seconds)
                 self.validation_steps = config.getint(modelname, "VALIDATION_STEPS")
                 self.lr = config.getfloat(modelname, "LEARNING_RATE")
+                self.momentum = config.getfloat(modelname, "MOMENTUM")
                 #snapshot folder, where training data will be saved
                 self.snapshot_prefix = config.get(modelname, "SNAPSHOT_DIR")
                 self.data_dir = config.get(modelname,"DATA_DIR")                
@@ -158,6 +159,9 @@ class ConfigurationFile:
     def get_decay_steps(self):
         return self.decay_steps
     
+    def get_momentum(self):
+        return self.momentum
+
     def use_cropping(self):
         return self.cropping
     
