@@ -1,0 +1,16 @@
+*.h5
+test_sample
+train_sample
+clothing-small.zip.1
+clothing-small
+*.tfrecords
+alexnet-adammodel
+alexnet-sgdmodel
+resnet-adammodel
+resnet-sgdmodel
+alexnet-adam-model
+alexnet-sgd-model
+resnet-adam-model
+resnet-sgd-model
+*/.ipynb*
+*/__pycache__*

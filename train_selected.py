@@ -24,6 +24,13 @@ import numpy as np
 import argparse
 import os
 import matplotlib as plt
+import pickle
+
+##imp
+import pandas as pd
+from datetime import datetime
+from matplotlib import pyplot as plt
+
 
 sys.path.append(os.getcwd())
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
@@ -51,6 +58,8 @@ if __name__ == '__main__' :
             tfr_test_file=[os.path.join(configuration.get_data_dir(), "test_{}.tfrecords".format(idx)) for idx in range(configuration.get_num_threads())]        
     sys.stdout.flush()
 
+    netmodel = pargs.arch + "-" + pargs.method
+    saved_to = os.path.join(configuration.get_data_dir(), netmodel)
     mean_file = os.path.join(configuration.get_data_dir(), "mean.dat")
     shape_file = os.path.join(configuration.get_data_dir(), "shape.dat")
     input_shape = np.fromfile(shape_file, dtype=np.int32)
@@ -113,12 +122,35 @@ if __name__ == '__main__' :
     model.compile(optimizer=opt, loss= losses.crossentropy_loss, metrics=['accuracy', metrics.simple_accuracy])
     
     if pargs.mode == 'train':                             
-        history = model.fit(tr_dataset, 
+        trainning = model.fit(tr_dataset, 
             epochs = configuration.get_number_of_epochs(),                        
             validation_data=val_dataset,
             validation_steps = configuration.get_validation_steps(),
             callbacks=[model_checkpoint_callback])
-                    
+
+        plt.figure(figsize=(20,5))
+        plt.suptitle(netmodel)
+
+        print ("Plotting Acurracy")
+        plt.subplot(1,2,2)
+        plt.xlabel('# Epocas')
+        plt.legend(loc="upper left", title="Accuracy", frameon=False)
+        plt.plot(trainning.history['accuracy'], label ='train_accuracy')
+        plt.plot(trainning.history['val_accuracy'], label ='val_accuracy')
+
+        print ("Plotting Loss")
+        plt.subplot(1,2,1)
+        plt.xlabel('# Epocas')
+        plt.legend(loc="upper right", title="Loss", frameon=False)
+        plt.plot(trainning.history['loss'], label ='train_loss')
+        plt.plot(trainning.history['val_loss'], label ='val_loss')
+        plt.show()
+
+        filename = saved_to + "-trainning.txt"
+        with open(filename, 'wb') as pyfile:  
+            pickle.dump(trainning.history, pyfile)
+        print("trainning historial saved in {}".format(filename))  
+
     elif pargs.mode == 'test' :
         model.evaluate(val_dataset, steps = configuration.get_validation_steps())
     
@@ -139,6 +171,6 @@ if __name__ == '__main__' :
                 filename = input('file :')
     #save the model   
     if pargs.save:
-        saved_to = os.path.join(configuration.get_data_dir(),pargs.arch + "-" + pargs.method + "model")
-        model.save(saved_to)
-        print("model saved to {}".format(saved_to))  
+        modelname = saved_to + "-model"
+        model.save(modelname)
+        print("model saved to {}".format(modelname))  
