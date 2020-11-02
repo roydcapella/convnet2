@@ -12,6 +12,7 @@ To use train.py, you will require to send the following parameters :
 import sys
 import os
 import tensorflow as tf
+from models import resnet
 from models import simple
 from models import alexnet
 import datasets.data as data
