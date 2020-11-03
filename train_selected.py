@@ -116,7 +116,7 @@ if __name__ == '__main__' :
     if (pargs.method == 'sgd') :
         opt = tf.keras.optimizers.SGD(learning_rate=configuration.get_learning_rate(), 
                                       decay=configuration.get_decay_steps(), 
-                                      momentum=configuration.get_momentum())
+                                      momentum=0.8) #configuration.get_momentum()
     if (pargs.method == 'adam'):    
         opt = tf.keras.optimizers.Adam(lr=configuration.get_learning_rate(), epsilon=1e-08)
         #opt = tf.keras.optimizers.Adam(lr=configuration.get_learning_rate(), beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)

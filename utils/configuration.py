@@ -36,7 +36,7 @@ class ConfigurationFile:
                 #test time sets when test is run (in seconds)
                 self.validation_steps = config.getint(modelname, "VALIDATION_STEPS")
                 self.lr = config.getfloat(modelname, "LEARNING_RATE")
-                self.momentum = config.getfloat(modelname, "MOMENTUM")
+                #self.momentum = config.getfloat(modelname, "MOMENTUM")
                 #snapshot folder, where training data will be saved
                 self.snapshot_prefix = config.get(modelname, "SNAPSHOT_DIR")
                 self.data_dir = config.get(modelname,"DATA_DIR")                
