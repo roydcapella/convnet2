@@ -59,7 +59,7 @@ if __name__ == '__main__' :
             tfr_test_file=[os.path.join(configuration.get_data_dir(), "test_{}.tfrecords".format(idx)) for idx in range(configuration.get_num_threads())]        
     sys.stdout.flush()
 
-    now = datetime.datetime.now().strftime("%Y%m%d-%H%M")
+    now = datetime.now().strftime("%Y%m%d-%H%M")
     netmodel = pargs.arch + "-" + pargs.method
     saved_to = os.path.join(configuration.get_data_dir(), netmodel)
     mean_file = os.path.join(configuration.get_data_dir(), "mean.dat")
@@ -68,8 +68,8 @@ if __name__ == '__main__' :
     mean_image = np.fromfile(mean_file, dtype=np.float32)
     mean_image = np.reshape(mean_image, input_shape)
     number_of_classes = configuration.get_number_of_classes()
-
-
+    print ("Initializing {} with {} in mode {} ".format(pargs.name, netmodel, pargs.mode))
+    
     # loading tfrecords into dataset object
     if pargs.mode == 'train':
         tr_dataset = tf.data.TFRecordDataset(tfr_train_file)
