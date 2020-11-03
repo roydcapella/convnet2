@@ -12,6 +12,7 @@ To use train.py, you will require to send the following parameters :
 import sys
 import os
 import tensorflow as tf
+
 from models import resnet
 from models import simple
 from models import alexnet
@@ -58,6 +59,7 @@ if __name__ == '__main__' :
             tfr_test_file=[os.path.join(configuration.get_data_dir(), "test_{}.tfrecords".format(idx)) for idx in range(configuration.get_num_threads())]        
     sys.stdout.flush()
 
+    now = datetime.datetime.now().strftime("%Y%m%d-%H%M")
     netmodel = pargs.arch + "-" + pargs.method
     saved_to = os.path.join(configuration.get_data_dir(), netmodel)
     mean_file = os.path.join(configuration.get_data_dir(), "mean.dat")
@@ -114,12 +116,13 @@ if __name__ == '__main__' :
 
     #configurando optimizador
     if (pargs.method == 'sgd') :
-
-        opt = tf.keras.optimizers.SGD(learning_rate=configuration.get_learning_rate(), 
-                                      decay=configuration.get_decay_steps(), ) #configuration.get_momentum()
+        lr_schedule = tf.keras.experimental.CosineDecay(initial_learning_rate = configuration.get_learning_rate(),
+                                                decay_steps = configuration.get_decay_steps(),
+                                                alpha = 0.0001)                                       
+        opt = tf.keras.optimizers.SGD(learning_rate = lr_schedule, momentum = 0.9, nesterov = True)
+  
     if (pargs.method == 'adam'):    
         opt = tf.keras.optimizers.Adam(lr=configuration.get_learning_rate(), epsilon=1e-08)
-        #opt = tf.keras.optimizers.Adam(lr=configuration.get_learning_rate(), beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
 
     #Compile model
     model.compile(optimizer=opt, loss= losses.crossentropy_loss, metrics=['accuracy', metrics.simple_accuracy])
@@ -149,7 +152,7 @@ if __name__ == '__main__' :
         plt.plot(trainning.history['val_loss'], label ='val_loss')
         plt.show()
 
-        filename = saved_to + "-trainning.txt"
+        filename = saved_to + "-training-" + now + ".txt"
         with open(filename, 'wb') as pyfile:  
             pickle.dump(trainning.history, pyfile)
         print("trainning historial saved in {}".format(filename))  
@@ -174,6 +177,6 @@ if __name__ == '__main__' :
                 filename = input('file :')
     #save the model   
     if pargs.save:
-        modelname = saved_to + "-model"
+        modelname = saved_to + "-model-" + now
         model.save(modelname)
-        print("model saved to {}".format(modelname))  
+        print("model saved to {}".format(modelname))
