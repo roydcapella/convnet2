@@ -88,7 +88,7 @@ if __name__ == '__main__' :
     # Defining callback for saving checkpoints
     # save_freq: frecuency in terms of number steps each time checkpoint is saved
     model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
-        filepath=configuration.get_snapshot_dir() + '{epoch:03d}.h5',
+        filepath=configuration.get_snapshot_dir() + '{netmodel}/{now}/{epoch:03d}.h5',
         save_weights_only=True,
         mode='max',
         monitor='val_acc',
