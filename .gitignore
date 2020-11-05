@@ -144,3 +144,15 @@ resnet-adam-model
 resnet-sgd-model
 */.ipynb*
 */__pycache__
+
+
+
+
+
+mean.dat
+mapping.txt
+shape.dat
+test.txt
+train.txt
+test_*_mean.npy
+train_*_mean.npy
