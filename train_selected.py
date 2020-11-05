@@ -64,7 +64,7 @@ if __name__ == '__main__' :
     checkpoints_path = os.path.join(saved_to, "checkpoints")
     mean_file = os.path.join(configuration.get_data_dir(), "mean.dat")
     shape_file = os.path.join(configuration.get_data_dir(),"shape.dat")
-    
+
     input_shape = np.fromfile(shape_file, dtype=np.int32)
     mean_image = np.fromfile(mean_file, dtype=np.float32)
     mean_image = np.reshape(mean_image, input_shape)
@@ -154,6 +154,8 @@ if __name__ == '__main__' :
         plt.show()
 
         filename = saved_to + "/training.txt"
+        if not os.path.exists(saved_to):
+            os.makedirs(saved_to)
         with open(filename, 'wb') as pyfile:  
             pickle.dump(trainning.history, pyfile)
         print("trainning historial saved in {}".format(filename))  
