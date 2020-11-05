@@ -1,4 +1,9 @@
+
 #!/bin/bash
+
+echo "CLOTHING_SMALL_MINIMAL"
+python3.8 train_selected.py -config configs/clothing-small-minimal.config -name CLOTHING_SMALL_MINIMAL -arch resnet -method sgd -mode train -save True
+
 echo "Train RESNET SGD"
 python3.8 train_selected.py -config configs/clothing-small-sgd.config -name CLOTHING_SMALL_SGD -arch resnet -method sgd -mode train -save True
 

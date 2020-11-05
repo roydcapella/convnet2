@@ -86,6 +86,8 @@ if __name__ == '__main__' :
             lambda x: data.parser_tfrecord(x, input_shape, mean_image, number_of_classes, with_augmentation=False))
         val_dataset = val_dataset.batch(batch_size=configuration.get_batch_size())
  
+    if not os.path.exists(checkpoints_path):
+        os.makedirs(checkpoints_path)
     # Defining callback for saving checkpoints
     # save_freq: frecuency in terms of number steps each time checkpoint is saved
     model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
@@ -154,8 +156,7 @@ if __name__ == '__main__' :
         plt.show()
 
         filename = saved_to + "/training.txt"
-        if not os.path.exists(saved_to):
-            os.makedirs(saved_to)
+       
         with open(filename, 'wb') as pyfile:  
             pickle.dump(trainning.history, pyfile)
         print("trainning historial saved in {}".format(filename))  
