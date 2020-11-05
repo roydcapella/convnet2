@@ -49,26 +49,27 @@ if __name__ == '__main__' :
     configuration = conf.ConfigurationFile(configuration_file, pargs.name)                   
     
     if pargs.mode == 'train' :
-        tfr_train_file = os.path.join(configuration.get_data_dir(), "train.tfrecords")
+        tfr_train_file = os.path.join(configuration.get_data_dir(), "tfrecords", now, "train.tfrecords")
     if pargs.mode == 'train' or  pargs.mode == 'test':    
-        tfr_test_file = os.path.join(configuration.get_data_dir(), "test.tfrecords")
+        tfr_test_file = os.path.join(configuration.get_data_dir(), "tfrecords", now, "test.tfrecords")
     if configuration.use_multithreads() :
         if pargs.mode == 'train' :
-            tfr_train_file=[os.path.join(configuration.get_data_dir(), "train_{}.tfrecords".format(idx)) for idx in range(configuration.get_num_threads())]
+            tfr_train_file=[os.path.join(configuration.get_data_dir(), "tfrecords", now, "train_{}.tfrecords".format(idx)) for idx in range(configuration.get_num_threads())]
         if pargs.mode == 'train' or  pargs.mode == 'test':    
-            tfr_test_file=[os.path.join(configuration.get_data_dir(), "test_{}.tfrecords".format(idx)) for idx in range(configuration.get_num_threads())]        
+            tfr_test_file=[os.path.join(configuration.get_data_dir(), "tfrecords", now, "test_{}.tfrecords".format(idx)) for idx in range(configuration.get_num_threads())]        
     sys.stdout.flush()
 
     now = datetime.now().strftime("%Y%m%d-%H%M")
     netmodel = pargs.arch + "-" + pargs.method
-    saved_to = os.path.join(configuration.get_data_dir(), netmodel)
-    mean_file = os.path.join(configuration.get_data_dir(), "mean.dat")
-    shape_file = os.path.join(configuration.get_data_dir(), "shape.dat")
+    saved_to = os.path.join(configuration.get_data_dir(), "models", pargs.arch, pargs.method , now)
+    checkpoints_path = os.path.join(saved_to, "checkpoints")
+    mean_file = os.path.join(configuration.get_data_dir(), "tfrecords", now, "mean.dat")
+    shape_file = os.path.join(configuration.get_data_dir(), "tfrecords", now, "shape.dat")
     input_shape = np.fromfile(shape_file, dtype=np.int32)
     mean_image = np.fromfile(mean_file, dtype=np.float32)
     mean_image = np.reshape(mean_image, input_shape)
     number_of_classes = configuration.get_number_of_classes()
-    print ("Initializing {} with {} in mode {} ".format(pargs.name, netmodel, pargs.mode))
+    print ("Initializing {} with {} in {} in mode {} ".format(pargs.name, pargs.arch, pargs.method, pargs.mode))
     
     # loading tfrecords into dataset object
     if pargs.mode == 'train':
@@ -88,7 +89,7 @@ if __name__ == '__main__' :
     # Defining callback for saving checkpoints
     # save_freq: frecuency in terms of number steps each time checkpoint is saved
     model_checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(
-        filepath=configuration.get_snapshot_dir() + '{netmodel}/{now}/{epoch:03d}.h5',
+        filepath= checkpoints_path + '/{epoch:03d}.h5',
         save_weights_only=True,
         mode='max',
         monitor='val_acc',
@@ -152,7 +153,7 @@ if __name__ == '__main__' :
         plt.plot(trainning.history['val_loss'], label ='val_loss')
         plt.show()
 
-        filename = saved_to + "-training-" + now + ".txt"
+        filename = saved_to + "/training.txt"
         with open(filename, 'wb') as pyfile:  
             pickle.dump(trainning.history, pyfile)
         print("trainning historial saved in {}".format(filename))  
@@ -177,6 +178,5 @@ if __name__ == '__main__' :
                 filename = input('file :')
     #save the model   
     if pargs.save:
-        modelname = saved_to + "-model-" + now
-        model.save(modelname)
-        print("model saved to {}".format(modelname))
+        model.save(saved_to)
+        print("model saved to {}".format(saved_to))
