@@ -50,20 +50,21 @@ if __name__ == '__main__' :
     now = datetime.now().strftime("%Y%m%d-%H%M")
 
     if pargs.mode == 'train' :
-        tfr_train_file = os.path.join(configuration.get_data_dir(), "tfrecords", "train.tfrecords")
+        tfr_train_file = os.path.join(configuration.get_data_dir(), "train.tfrecords")
     if pargs.mode == 'train' or  pargs.mode == 'test':    
-        tfr_test_file = os.path.join(configuration.get_data_dir(), "tfrecords", "test.tfrecords")
+        tfr_test_file = os.path.join(configuration.get_data_dir(), "test.tfrecords")
     if configuration.use_multithreads() :
         if pargs.mode == 'train' :
-            tfr_train_file=[os.path.join(configuration.get_data_dir(), "tfrecords", "train_{}.tfrecords".format(idx)) for idx in range(configuration.get_num_threads())]
+            tfr_train_file=[os.path.join(configuration.get_data_dir(), "train_{}.tfrecords".format(idx)) for idx in range(configuration.get_num_threads())]
         if pargs.mode == 'train' or  pargs.mode == 'test':    
-            tfr_test_file=[os.path.join(configuration.get_data_dir(), "tfrecords", "test_{}.tfrecords".format(idx)) for idx in range(configuration.get_num_threads())]        
+            tfr_test_file=[os.path.join(configuration.get_data_dir(), "test_{}.tfrecords".format(idx)) for idx in range(configuration.get_num_threads())]        
     sys.stdout.flush()
 
     saved_to = os.path.join(configuration.get_data_dir(), "models", pargs.arch, pargs.method , now)
     checkpoints_path = os.path.join(saved_to, "checkpoints")
-    mean_file = os.path.join(configuration.get_data_dir(), "tfrecords", "mean.dat")
-    shape_file = os.path.join(configuration.get_data_dir(), "tfrecords","shape.dat")
+    mean_file = os.path.join(configuration.get_data_dir(), "mean.dat")
+    shape_file = os.path.join(configuration.get_data_dir(),"shape.dat")
+    
     input_shape = np.fromfile(shape_file, dtype=np.int32)
     mean_image = np.fromfile(mean_file, dtype=np.float32)
     mean_image = np.reshape(mean_image, input_shape)
