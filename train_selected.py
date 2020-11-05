@@ -47,7 +47,8 @@ if __name__ == '__main__' :
     pargs = parser.parse_args()     
     configuration_file = pargs.config
     configuration = conf.ConfigurationFile(configuration_file, pargs.name)                   
-    
+    now = datetime.now().strftime("%Y%m%d-%H%M")
+
     if pargs.mode == 'train' :
         tfr_train_file = os.path.join(configuration.get_data_dir(), "tfrecords", now, "train.tfrecords")
     if pargs.mode == 'train' or  pargs.mode == 'test':    
@@ -59,8 +60,6 @@ if __name__ == '__main__' :
             tfr_test_file=[os.path.join(configuration.get_data_dir(), "tfrecords", now, "test_{}.tfrecords".format(idx)) for idx in range(configuration.get_num_threads())]        
     sys.stdout.flush()
 
-    now = datetime.now().strftime("%Y%m%d-%H%M")
-    netmodel = pargs.arch + "-" + pargs.method
     saved_to = os.path.join(configuration.get_data_dir(), "models", pargs.arch, pargs.method , now)
     checkpoints_path = os.path.join(saved_to, "checkpoints")
     mean_file = os.path.join(configuration.get_data_dir(), "tfrecords", now, "mean.dat")
@@ -136,7 +135,7 @@ if __name__ == '__main__' :
             callbacks=[model_checkpoint_callback])
 
         plt.figure(figsize=(20,5))
-        plt.suptitle(netmodel)
+        plt.suptitle(pargs.arch + "-" + pargs.method + "-" + now)
 
         print ("Plotting Acurracy")
         plt.subplot(1,2,2)
