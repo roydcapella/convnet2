@@ -151,6 +151,7 @@ def process_batch_threads(thr_index, ranges, filenames, labels, image_shape, tfr
     
 def create_tfrecords_threads(filenames, labels, image_shape, tfr_filename, process_function, n_threads):
     assert len(filenames) == len(labels) 
+    print("create_tfrecords_threads", filenames)
     #break whole dataset int batches according to the number of threads
     spacing = np.linspace(0, len(filenames), n_threads + 1).astype(np.int)
     ranges = []    
@@ -188,7 +189,8 @@ def create_tfrecords(config, _type, processFun = imgproc.resize_image) :
     im_shape: [H,W,C] of the input          
     processFun: processing function which depends on the problem we are dealing with
     """
-    data_dir = config.get_data_dir()    
+    data_dir = config.get_data_dir() 
+    print("the data dir is ", data_dir)   
     image_shape = np.asarray(config.get_image_shape())
     n_threads = config.get_num_threads()    
     #------------- creating train data

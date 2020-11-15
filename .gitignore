@@ -147,8 +147,7 @@ resnet-sgd-model
 
 
 
-
-
+data/
 mean.dat
 mapping.txt
 shape.dat
