@@ -6,11 +6,11 @@ Description: Create tfrecords
 
 import os
 import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import argparse
 import utils.configuration as conf
 import utils.imgproc as imgproc
 import datasets.data as data
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 if __name__ == '__main__':                    
     parser = argparse.ArgumentParser(description = "Create a dataset for training an testing")
