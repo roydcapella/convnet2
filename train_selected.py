@@ -59,7 +59,7 @@ if __name__ == '__main__' :
             tfr_test_file=[os.path.join(configuration.get_data_dir(), "test_{}.tfrecords".format(idx)) for idx in range(configuration.get_num_threads())]        
     sys.stdout.flush()
 
-
+!rm data/train_{}.tfrecords
     saved_to = os.path.join(configuration.get_data_dir(), "data", pargs.arch, pargs.method)
     historyModel = os.path.join(saved_to, pargs.history)
     checkpoints_path = os.path.join(saved_to, "checkpoints")
@@ -113,10 +113,10 @@ if __name__ == '__main__' :
         input_image = tf.keras.Input((input_shape[0], input_shape[1], input_shape[2]), name='input_image')
         model(input_image)
         model.summary()
-
     #aplicando pesos
     if pargs.history != '':
-        model.load_weights(configuration.get_checkpoint_file(), by_name=True, skip_mismatch=True)
+        historyModel = os.path.join(saved_to, pargs.history)
+        model.load_weights(historyModel, by_name=True, skip_mismatch=True)
 
     #configurando optimizador
     if (pargs.method == 'sgd') :
