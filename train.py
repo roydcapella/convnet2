@@ -12,7 +12,6 @@ To use train.py, you will require to send the following parameters :
 
 import sys
 #set the convnet2 path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '.')))
 import tensorflow as tf
 from models import resnet, uv_rois
 import datasets.data as data
@@ -21,6 +20,7 @@ import utils.losses as losses
 import numpy as np
 import argparse
 import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '.')))
 
 
 
