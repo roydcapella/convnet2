@@ -32,6 +32,7 @@ import pandas as pd
 from datetime import datetime
 from matplotlib import pyplot as plt
 
+
 sys.path.append(os.getcwd())
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 
@@ -41,13 +42,18 @@ if __name__ == '__main__' :
     parser.add_argument("-name", type=str, help=" name of section in the configuration file", required = True)
     parser.add_argument("-mode", type=str, choices=['train', 'test', 'predict'],  help=" train or test", required = False, default = 'train')
     parser.add_argument("-arch", type=str, choices=['resnet', 'alexnet'],  help=" resnet or alexnet", required = False, default = 'resnet')
+    parser.add_argument("-now", type=str, help="datetime", required = False, default = '')
     parser.add_argument("-method", type=str, choices=['sgd', 'adam', 'tl', ],  help="sgd, adam or tl", required = False, default = 'sgd')
     parser.add_argument("-save", type= bool,  help=" True to save the model", required = False, default = False)    
     pargs = parser.parse_args()     
     configuration_file = pargs.config
     configuration = conf.ConfigurationFile(configuration_file, pargs.name)                   
 
-    if pargs.mode == 'train' :
+    if pargs.now == '':
+        now = datetime.now().strftime("%Y%m%d-%H%M")
+    else:
+        now = pargs.mode    
+    if pargs.mod == 'train' :
         tfr_train_file = os.path.join(configuration.get_data_dir(), "train.tfrecords")
     if pargs.mode == 'train' or  pargs.mode == 'test':    
         tfr_test_file = os.path.join(configuration.get_data_dir(), "test.tfrecords")
@@ -59,7 +65,7 @@ if __name__ == '__main__' :
     sys.stdout.flush()
 
 
-    saved_to = os.path.join(configuration.get_data_dir(), "data", pargs.arch, pargs.method)
+    saved_to = os.path.join(configuration.get_data_dir(), "models", pargs.arch, pargs.method , now)
     checkpoints_path = os.path.join(saved_to, "checkpoints")
     mean_file = os.path.join(configuration.get_data_dir(), "mean.dat")
     shape_file = os.path.join(configuration.get_data_dir(),"shape.dat")
@@ -135,9 +141,9 @@ if __name__ == '__main__' :
             validation_data=val_dataset,
             validation_steps = configuration.get_validation_steps(),
             callbacks=[model_checkpoint_callback])
-        '''
+
         plt.figure(figsize=(20,5))
-        plt.suptitle(pargs.arch + "-" + pargs.method)
+        plt.suptitle(pargs.arch + "-" + pargs.method + "-" + now)
 
         print ("Plotting Acurracy")
         plt.subplot(1,2,2)
@@ -153,7 +159,6 @@ if __name__ == '__main__' :
         plt.plot(trainning.history['loss'], label ='train_loss')
         plt.plot(trainning.history['val_loss'], label ='val_loss')
         plt.show()
-        '''
 
         filename = saved_to + "/training.txt"
        
