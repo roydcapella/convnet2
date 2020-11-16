@@ -57,6 +57,8 @@ if __name__ == '__main__' :
     else:
         saved_to = os.path.join(configuration.get_data_dir(), "data", pargs.arch, pargs.method, pargs.version)
     
+
+
     checkpoints_path = os.path.join(saved_to, "checkpoints")
     mean_file = os.path.join(configuration.get_data_dir(), "mean.dat")
     shape_file = os.path.join(configuration.get_data_dir(),"shape.dat")
@@ -120,6 +122,12 @@ if __name__ == '__main__' :
   
     if (pargs.method == 'adam'):    
         opt = tf.keras.optimizers.Adam(lr=configuration.get_learning_rate(), epsilon=1e-08)
+
+    #GPU is already?
+    gpu = tf.test.gpu_device_name()
+    if gpu != '/device:GPU:0':
+        raise SystemError('GPU {} not found'.format(gpu))
+        print('GPU {} not found'.format(gpu))
 
     #Compile model
     model.compile(optimizer=opt, loss= losses.crossentropy_loss, metrics=['accuracy', metrics.simple_accuracy])
