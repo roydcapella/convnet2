@@ -67,8 +67,7 @@ if __name__ == '__main__' :
     mean_image = np.fromfile(mean_file, dtype=np.float32)
     mean_image = np.reshape(mean_image, input_shape)
     number_of_classes = configuration.get_number_of_classes()
-    print ("Initializing {} with {} in {} in mode {} ".format(pargs.name, pargs.arch, pargs.method, pargs.mode))
-    
+    print ("Initializing {} with {} in {} ".format(pargs.name, pargs.arch, pargs.method))
     # loading tfrecords tr_dataset into dataset object
     tr_dataset = tf.data.TFRecordDataset(tfr_train_file)
     tr_dataset = tr_dataset.map(
@@ -140,9 +139,11 @@ if __name__ == '__main__' :
 
     with open(saved_to + "/training.txt", 'wb') as pyfile:  
         pickle.dump(trainning.history, pyfile)
-    print("trainning historial saved in {}".format(filename))  
 
     #save the model   
     if pargs.save:
         model.save(saved_to)
         print("model saved to {}".format(saved_to))
+
+    print("The model was trained successfully. You can download it from ", saved_to)
+    
