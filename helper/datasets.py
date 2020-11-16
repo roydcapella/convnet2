@@ -1,3 +1,33 @@
+##importando algunas dependencias
+import numpy as np
+import argparse
+import os
+import matplotlib as plt
+import pickle
+import skimage.io as io
+import skimage.color as color
+import skimage.morphology as morph
+import tensorflow as tf
+from sklearn.metrics import confusion_matrix, accuracy_score, f1_score, classification_report
+import skimage.transform as transf
+import random
+import threading
+from datetime import datetime
+from tqdm import tqdm
+import sys
+sys.path.append('.')
+import utils.configuration as conf
+import datasets.data as data
+#from __future__ import absolute_import, division, print_function, unicode_literals
+from tensorflow import keras
+from tensorflow.keras import layers
+#tf.keras.backend.clear_session()  # Para restablecer fácilmente el estado del portátil.
+from models import resnet
+from models import alexnet
+import utils.metrics as metrics
+import utils.losses as losses
+import utils.imgproc as imgproc
+
 #Dataset helpers
 
 def retrieve_dataset(data_dir, num_classes, num_threads, shuffle_size, batch_size):

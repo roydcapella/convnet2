@@ -1,3 +1,17 @@
+##importando algunas dependencias
+import numpy as np
+import argparse
+import os
+import matplotlib as plt
+import pickle
+import pandas as pd
+import random
+from datetime import datetime
+import sys
+sys.path.append('.')
+import utils.configuration as conf
+
+
 #plotters helpers
 def plotAccuracyLoss(name, training_file):
     """Imprime la comparativa entre Accuracy y Loss para el entrenamiento de un modelo dado
