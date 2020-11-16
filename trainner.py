@@ -39,6 +39,7 @@ if __name__ == '__main__' :
     parser.add_argument("-arch", type=str, choices=['resnet', 'alexnet'],  help=" resnet or alexnet", required = False, default = 'resnet')
     parser.add_argument("-method", type=str, choices=['sgd', 'adam', 'tl', ],  help="sgd, adam or tl", required = False, default = 'sgd')
     parser.add_argument("-version", type=str,  help="If you want to save it to a specific folder", required = False, default = '')
+    parser.add_argument("-ckpfile", type=str,  help="If you want to load weights to your training", required = False, default = '')
     parser.add_argument("-save", type= bool,  help=" True to save the model", required = False, default = False)    
     pargs = parser.parse_args()     
     configuration_file = pargs.config
@@ -109,8 +110,8 @@ if __name__ == '__main__' :
         model.summary()
 
     #aplicando pesos
-    if configuration.use_checkpoint():
-        model.load_weights(configuration.get_checkpoint_file(), by_name=True, skip_mismatch=True)
+    if pargs.ckpfile != '':
+        model.load_weights(pargs.ckpfile, by_name=True, skip_mismatch=True)
 
     #configurando optimizador
     if (pargs.method == 'sgd') :
