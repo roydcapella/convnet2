@@ -38,6 +38,7 @@ if __name__ == '__main__' :
     parser.add_argument("-name", type=str, help=" name of section in the configuration file", required = True)
     parser.add_argument("-arch", type=str, choices=['resnet', 'alexnet'],  help=" resnet or alexnet", required = False, default = 'resnet')
     parser.add_argument("-method", type=str, choices=['sgd', 'adam', 'tl', ],  help="sgd, adam or tl", required = False, default = 'sgd')
+    parser.add_argument("-version", type=str,  help="If you want to save it to a specific folder", required = False, default = '')
     parser.add_argument("-save", type= bool,  help=" True to save the model", required = False, default = False)    
     pargs = parser.parse_args()     
     configuration_file = pargs.config
@@ -50,8 +51,12 @@ if __name__ == '__main__' :
         tfr_train_file=[os.path.join(configuration.get_data_dir(), "train_{}.tfrecords".format(idx)) for idx in range(configuration.get_num_threads())]
         tfr_test_file=[os.path.join(configuration.get_data_dir(), "test_{}.tfrecords".format(idx)) for idx in range(configuration.get_num_threads())]        
     sys.stdout.flush()
-
-    saved_to = os.path.join(configuration.get_data_dir(), "data", pargs.arch, pargs.method)
+    
+    if pargs.version == '':
+        saved_to = os.path.join(configuration.get_data_dir(), "data", pargs.arch, pargs.method)
+    else:
+        saved_to = os.path.join(configuration.get_data_dir(), "data", pargs.arch, pargs.method, pargs.version)
+    
     checkpoints_path = os.path.join(saved_to, "checkpoints")
     mean_file = os.path.join(configuration.get_data_dir(), "mean.dat")
     shape_file = os.path.join(configuration.get_data_dir(),"shape.dat")
@@ -124,25 +129,6 @@ if __name__ == '__main__' :
         validation_data=val_dataset,
         validation_steps = configuration.get_validation_steps(),
         callbacks=[model_checkpoint_callback])
-        '''
-        plt.figure(figsize=(20,5))
-        plt.suptitle(pargs.arch + "-" + pargs.method)
-
-        print ("Plotting Acurracy")
-        plt.subplot(1,2,2)
-        plt.xlabel('# Epocas')
-        plt.legend(loc="upper left", title="Accuracy", frameon=False)
-        plt.plot(trainning.history['accuracy'], label ='train_accuracy')
-        plt.plot(trainning.history['val_accuracy'], label ='val_accuracy')
-
-        print ("Plotting Loss")
-        plt.subplot(1,2,1)
-        plt.xlabel('# Epocas')
-        plt.legend(loc="upper right", title="Loss", frameon=False)
-        plt.plot(trainning.history['loss'], label ='train_loss')
-        plt.plot(trainning.history['val_loss'], label ='val_loss')
-        plt.show()
-        '''
 
     with open(saved_to + "/training.txt", 'wb') as pyfile:  
         pickle.dump(trainning.history, pyfile)

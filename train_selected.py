@@ -39,7 +39,6 @@ if __name__ == '__main__' :
     parser = argparse.ArgumentParser(description = "Train many model")
     parser.add_argument("-config", type = str, help = "<str> configuration file", required = True)
     parser.add_argument("-name", type=str, help=" name of section in the configuration file", required = True)
-    parser.add_argument("-history", type=str, help="filename with model history to load", required = False, default='')
     parser.add_argument("-mode", type=str, choices=['train', 'test', 'predict'],  help=" train or test", required = False, default = 'train')
     parser.add_argument("-arch", type=str, choices=['resnet', 'alexnet'],  help=" resnet or alexnet", required = False, default = 'resnet')
     parser.add_argument("-method", type=str, choices=['sgd', 'adam', 'tl', ],  help="sgd, adam or tl", required = False, default = 'sgd')
@@ -59,9 +58,7 @@ if __name__ == '__main__' :
             tfr_test_file=[os.path.join(configuration.get_data_dir(), "test_{}.tfrecords".format(idx)) for idx in range(configuration.get_num_threads())]        
     sys.stdout.flush()
 
-!rm data/train_{}.tfrecords
     saved_to = os.path.join(configuration.get_data_dir(), "data", pargs.arch, pargs.method)
-    historyModel = os.path.join(saved_to, pargs.history)
     checkpoints_path = os.path.join(saved_to, "checkpoints")
     mean_file = os.path.join(configuration.get_data_dir(), "mean.dat")
     shape_file = os.path.join(configuration.get_data_dir(),"shape.dat")
@@ -113,10 +110,10 @@ if __name__ == '__main__' :
         input_image = tf.keras.Input((input_shape[0], input_shape[1], input_shape[2]), name='input_image')
         model(input_image)
         model.summary()
+
     #aplicando pesos
-    if pargs.history != '':
-        historyModel = os.path.join(saved_to, pargs.history)
-        model.load_weights(historyModel, by_name=True, skip_mismatch=True)
+    if configuration.use_checkpoint():
+        model.load_weights(configuration.get_checkpoint_file(), by_name=True, skip_mismatch=True)
 
     #configurando optimizador
     if (pargs.method == 'sgd') :
@@ -137,25 +134,6 @@ if __name__ == '__main__' :
             validation_data=val_dataset,
             validation_steps = configuration.get_validation_steps(),
             callbacks=[model_checkpoint_callback])
-        '''
-        plt.figure(figsize=(20,5))
-        plt.suptitle(pargs.arch + "-" + pargs.method)
-
-        print ("Plotting Acurracy")
-        plt.subplot(1,2,2)
-        plt.xlabel('# Epocas')
-        plt.legend(loc="upper left", title="Accuracy", frameon=False)
-        plt.plot(trainning.history['accuracy'], label ='train_accuracy')
-        plt.plot(trainning.history['val_accuracy'], label ='val_accuracy')
-
-        print ("Plotting Loss")
-        plt.subplot(1,2,1)
-        plt.xlabel('# Epocas')
-        plt.legend(loc="upper right", title="Loss", frameon=False)
-        plt.plot(trainning.history['loss'], label ='train_loss')
-        plt.plot(trainning.history['val_loss'], label ='val_loss')
-        plt.show()
-        '''
 
         filename = saved_to + "/training.txt"
        
