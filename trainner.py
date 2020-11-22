@@ -39,30 +39,29 @@ if __name__ == '__main__' :
     parser.add_argument("-arch", type=str, choices=['resnet', 'alexnet'],  help=" resnet or alexnet", required = False, default = 'resnet')
     parser.add_argument("-method", type=str, choices=['sgd', 'adam', 'tl', ],  help="sgd, adam or tl", required = False, default = 'sgd')
     parser.add_argument("-version", type=str,  help="If you want to save it to a specific folder", required = False, default = '')
+    parser.add_argument("-prefix", type = str, help = "The dataset filename's prefix", required = False, default = '')
     parser.add_argument("-ckpfile", type=str,  help="If you want to load weights to your training", required = False, default = '')
     parser.add_argument("-save", type= bool,  help=" True to save the model", required = False, default = False)    
     pargs = parser.parse_args()     
     configuration_file = pargs.config
     configuration = conf.ConfigurationFile(configuration_file, pargs.name)                   
 
-    tfr_train_file = os.path.join(configuration.get_data_dir(), "train.tfrecords")
-    tfr_test_file = os.path.join(configuration.get_data_dir(), "test.tfrecords")
+    tfr_train_file = os.path.join(configuration.get_data_dir(), parser.prefix + "train.tfrecords")
+    tfr_test_file = os.path.join(configuration.get_data_dir(), parser.prefix +  "test.tfrecords")
 
     if configuration.use_multithreads() :
-        tfr_train_file=[os.path.join(configuration.get_data_dir(), "train_{}.tfrecords".format(idx)) for idx in range(configuration.get_num_threads())]
-        tfr_test_file=[os.path.join(configuration.get_data_dir(), "test_{}.tfrecords".format(idx)) for idx in range(configuration.get_num_threads())]        
+        tfr_train_file=[os.path.join(configuration.get_data_dir(), parser.prefix + "train_{}.tfrecords".format(idx)) for idx in range(configuration.get_num_threads())]
+        tfr_test_file=[os.path.join(configuration.get_data_dir(), parser.prefix + "test_{}.tfrecords".format(idx)) for idx in range(configuration.get_num_threads())]        
     sys.stdout.flush()
     
     if pargs.version == '':
-        saved_to = os.path.join(configuration.get_data_dir(), "data", pargs.arch, pargs.method)
+        saved_to = os.path.join(configuration.get_data_dir(), "data", parser.prefix + pargs.arch, pargs.method)
     else:
-        saved_to = os.path.join(configuration.get_data_dir(), "data", pargs.arch, pargs.method, pargs.version)
+        saved_to = os.path.join(configuration.get_data_dir(), "data", parser.prefix + pargs.arch, pargs.method, pargs.version)
     
-
-
     checkpoints_path = os.path.join(saved_to, "checkpoints")
-    mean_file = os.path.join(configuration.get_data_dir(), "mean.dat")
-    shape_file = os.path.join(configuration.get_data_dir(),"shape.dat")
+    mean_file = os.path.join(configuration.get_data_dir(), parser.prefix + "mean.dat")
+    shape_file = os.path.join(configuration.get_data_dir(), parser.prefix + "shape.dat")
 
     input_shape = np.fromfile(shape_file, dtype=np.int32)
     mean_image = np.fromfile(mean_file, dtype=np.float32)

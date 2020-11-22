@@ -40,6 +40,7 @@ if __name__ == '__main__' :
     parser.add_argument("-name", type=str, help=" name of section in the configuration file", required = True)
     parser.add_argument("-arch", type=str, choices=['resnet', 'alexnet'],  help=" resnet or alexnet", required = False, default = 'resnet')
     parser.add_argument("-method", type=str, choices=['sgd', 'adam', 'tl', ],  help="sgd, adam or tl", required = False, default = 'sgd')
+    parser.add_argument("-prefix", type = str, help = "The dataset filename's prefix", required = False, default = '')
     parser.add_argument("-save", type= bool,  help=" True to save the model", required = False, default = False)    
     pargs = parser.parse_args()     
     configuration_file = pargs.config
@@ -47,16 +48,16 @@ if __name__ == '__main__' :
 
     sys.stdout.flush()
 
-    saved_to = os.path.join(configuration.get_data_dir(), "data", pargs.arch, pargs.method)
+    saved_to = os.path.join(configuration.get_data_dir(), "data",  parser.prefix + pargs.arch, pargs.method)
     checkpoints_path = os.path.join(saved_to, "checkpoints")
-    mean_file = os.path.join(configuration.get_data_dir(), "mean.dat")
-    shape_file = os.path.join(configuration.get_data_dir(),"shape.dat")
+    mean_file = os.path.join(configuration.get_data_dir(),  parser.prefix + "mean.dat")
+    shape_file = os.path.join(configuration.get_data_dir(), parser.prefix + "shape.dat")
 
     input_shape = np.fromfile(shape_file, dtype=np.int32)
     mean_image = np.fromfile(mean_file, dtype=np.float32)
     mean_image = np.reshape(mean_image, input_shape)
     number_of_classes = configuration.get_number_of_classes()
-    print ("Initializing {} with {} in {} in mode {} ".format(pargs.name, pargs.arch, pargs.method, pargs.mode))
+    print ("Initializing {} with {} in {} in mode {} ".format(pargs.name,  parser.prefix + pargs.arch, pargs.method, pargs.mode))
     
     if not os.path.exists(checkpoints_path):
         os.makedirs(checkpoints_path)

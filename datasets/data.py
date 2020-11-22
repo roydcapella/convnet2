@@ -69,7 +69,7 @@ def read_data_from_file(str_path, dataset = "train" , shuf = True):
     and apply shuffle by default 
     """            
     datafile = os.path.join(str_path, dataset + ".txt") 
-    print (datafile)   
+    print ("read_data_from_file: " + datafile)   
     assert os.path.exists(datafile)        
     # reading data from files, line by line
     with open(datafile) as file :        
@@ -182,10 +182,11 @@ def create_tfrecords_threads(filenames, labels, image_shape, tfr_filename, proce
     return mean_image           
         
 
-def create_tfrecords(config, _type, processFun = imgproc.resize_image) :
+def create_tfrecords(config, _type, _prefix, processFun = imgproc.resize_image) :
     """ 
     data_dir: Folder where data is located (train.txt and test.txt should be found)
-    type: 'train' | 'test' | 'all' (default='all')             
+    type: 'train' | 'test' | 'all' (default='all')
+    prefix: prefix to define all files             
     im_shape: [H,W,C] of the input          
     processFun: processing function which depends on the problem we are dealing with
     """
@@ -195,32 +196,32 @@ def create_tfrecords(config, _type, processFun = imgproc.resize_image) :
     n_threads = config.get_num_threads()    
     #------------- creating train data
     if (_type == 'train') or (_type == 'all') : 
-        filenames, labels = read_data_from_file(data_dir, dataset = 'train', shuf = True)
+        filenames, labels = read_data_from_file(data_dir, dataset = _prefix + 'train', shuf = True)
         if config.use_multithreads() :
-            tfr_filename = os.path.join(data_dir, 'train')
+            tfr_filename = os.path.join(data_dir, _prefix + 'train')
             training_mean = create_tfrecords_threads(filenames, labels, image_shape, tfr_filename, processFun, n_threads)
         else :        
-            tfr_filename = os.path.join(data_dir, 'train.tfrecords')            
+            tfr_filename = os.path.join(data_dir, _prefix + 'train.tfrecords')            
             training_mean = create_tfrecords_from_file(filenames, labels, image_shape, tfr_filename, processFun)
             
         print('train_record saved at {}.'.format(tfr_filename))
         #saving training mean
-        mean_file = os.path.join(data_dir, "mean.dat")
+        mean_file = os.path.join(data_dir, _prefix + "mean.dat")
         print("mean_file {}".format(training_mean.shape))
         training_mean.astype(np.float32).tofile(mean_file)
         print("mean_file saved at {}.".format(mean_file))
         #saving shape file    
-        shape_file = os.path.join(data_dir, "shape.dat")
+        shape_file = os.path.join(data_dir, _prefix + "shape.dat")
         image_shape.astype(np.int32).tofile(shape_file)
         print("shape_file saved at {}.".format(shape_file))  
-    #-------------- creating test data    
+    #------------- creating test data    
     if (_type == 'test') or (_type == 'all') :
-        filenames, labels = read_data_from_file(data_dir, dataset="test", shuf = True)
+        filenames, labels = read_data_from_file(data_dir, dataset= _prefix + "test", shuf = True)
         if config.use_multithreads() :
-            tfr_filename = os.path.join(data_dir, 'test')
+            tfr_filename = os.path.join(data_dir, _prefix + 'test')
             create_tfrecords_threads(filenames, labels, image_shape, tfr_filename, processFun, n_threads)
         else :    
-            tfr_filename = os.path.join(data_dir, "test.tfrecords")
+            tfr_filename = os.path.join(data_dir, _prefix + "test.tfrecords")
             create_tfrecords_from_file(filenames, labels, image_shape, tfr_filename, processFun)
         print("test_record saved at {}.".format(tfr_filename))    
                 

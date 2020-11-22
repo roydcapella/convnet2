@@ -17,6 +17,7 @@ if __name__ == '__main__':
     """ pathname must include train.txt and test.txt files """  
     parser.add_argument("-type", type = str, help = "train| test | all",  choices = ['train', 'test', 'all'], required = True )
     parser.add_argument("-config", type = str, help = "<str> configuration file", required = True)
+    parser.add_argument("-prefix", type = str, help = "The dataset filename's prefix", required = False, default = '')
     parser.add_argument("-name", type=str, help=" name of section in the configuration file", required = True)                
     pargs = parser.parse_args() 
     configuration_file = pargs.config
@@ -31,6 +32,7 @@ if __name__ == '__main__':
     elif configuration.get_image_type() == 'CUSTOM'  : 
         process_fun = imgproc.create_processing_function(configuration.get_image_processing_params())    
     data.create_tfrecords(configuration, 
-                          pargs.type, 
+                          pargs.type,
+                          pargs.prefix, 
                           processFun = process_fun)
     print("tfrecords created for " + configuration.get_data_dir())
