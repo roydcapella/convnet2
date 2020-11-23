@@ -32,7 +32,7 @@ def read_image(filename, number_of_channels):
     """ read_image using skimage
         The output is a 3-dim image [H, W, C]
     """
-    print ("reading " +read_image )    
+    print ("read_image is called with ", filename, number_of_channels  )    
     if number_of_channels  == 1 :            
         image = io.imread(filename, as_gray = True)
         image = imgproc.toUINT8(image)
