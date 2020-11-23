@@ -87,10 +87,6 @@ def resize_image_keeping_aspect(image, output_size):
 
 def image_crop_rgb(image, bg_color, padding = 0):
     #image_crop_rgb shape 2 1
-
-    print("image_crop_rgb len shape", len(image.shape))
-    print("image_crop_rgb shape 2", image.shape[2] )
-    print("image_crop_rgb len bg_color", len(bg_color))
     assert(len(image.shape) == 3 and image.shape[2] == 3)
     assert(len(bg_color) == 3)
     red = image[:,:,0]
