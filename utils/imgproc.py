@@ -86,6 +86,9 @@ def resize_image_keeping_aspect(image, output_size):
     return image_out
 
 def image_crop_rgb(image, bg_color, padding = 0):
+    print("image_crop_rgb len shape", len(image.shape))
+    print("image_crop_rgb shape 2", image.shape[2] )
+    print("image_crop_rgb len bg_color", len(bg_color))
     assert(len(image.shape) == 3 and image.shape[2] == 3)
     assert(len(bg_color) == 3)
     red = image[:,:,0]
@@ -146,6 +149,7 @@ def image_crop_gray(image, bg_color, padding = 0):
     return new_image
      
 def process_sketch(image, output_size):
+    print ("process_sketch called")
     new_image = image_crop_rgb(image, (255,255,255), padding = 20)
     new_image = resize_image_keeping_aspect(new_image, output_size)
     one_channel = new_image[:,:,0]
@@ -174,6 +178,7 @@ def create_processing_function(imgproc_params):
     
     def process_fun(image, output_size):
         if with_crop :
+            print ("process_fun", n_channels)
             if n_channels == 1 :
                 f_crop = image_crop_gray
             if n_channels == 3 :
