@@ -180,7 +180,6 @@ def create_processing_function(imgproc_params):
     
     def process_fun(image, output_size):
         if with_crop :
-            print ("process_fun", n_channels)
             if n_channels == 1 :
                 f_crop = image_crop_gray
             if n_channels == 3 :

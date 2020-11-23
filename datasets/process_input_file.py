@@ -63,7 +63,6 @@ def read_data_from_file(filename, mapping_file = None):
     """read data from text files and convert
     string labels to integer labels
     """     
-    print(filename)
     # reading data from files, line by line
     with open(filename) as file :        
         lines = [line.rstrip() for line in file]             
@@ -71,7 +70,6 @@ def read_data_from_file(filename, mapping_file = None):
         filenames, labels = zip(*lines_)
         if mapping_file is None :
             labels, mapping = validate_labels(labels)
-            print(mapping)
             if bool(mapping) :            
                 mapping_file = os.path.join(os.path.dirname(filename), "mapping.txt")
                 print('save mapping at {}'.format(mapping_file))            

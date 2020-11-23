@@ -32,7 +32,7 @@ def read_image(filename, number_of_channels):
     """ read_image using skimage
         The output is a 3-dim image [H, W, C]
     """
-    print ("read_image is called with ", filename, number_of_channels  )    
+    #print ("read_image is called with ", filename, number_of_channels  )    
     if number_of_channels  == 1 :            
         image = io.imread(filename, as_gray = True)
         image = imgproc.toUINT8(image)
@@ -70,7 +70,7 @@ def read_data_from_file(str_path, dataset = "train" , shuf = True):
     and apply shuffle by default 
     """            
     datafile = os.path.join(str_path, dataset + ".txt") 
-    print ("read_data_from_file: " + datafile)   
+    #print ("read_data_from_file: " + datafile)   
     assert os.path.exists(datafile)        
     # reading data from files, line by line
     with open(datafile) as file :        
@@ -118,7 +118,6 @@ def create_tfrecords_from_file(filenames, labels, image_shape, tfr_filename, pro
 
 def process_batch_threads(thr_index, ranges, filenames, labels, image_shape, tfr_filename, process_function = imgproc.resize_image):    
     #create tf-records  
-    print ("process_batch_threads is called")  
     tfr_filename_batch = '{}_{}.tfrecords'.format(tfr_filename, thr_index)
     mean_filename_batch = '{}_{}_mean.npy'.format(tfr_filename, thr_index)    
     writer = tf.io.TFRecordWriter(tfr_filename_batch)
@@ -153,7 +152,6 @@ def process_batch_threads(thr_index, ranges, filenames, labels, image_shape, tfr
     
 def create_tfrecords_threads(filenames, labels, image_shape, tfr_filename, process_function, n_threads):
     assert len(filenames) == len(labels) 
-    print("create_tfrecords_threads", filenames)
     #break whole dataset int batches according to the number of threads
     spacing = np.linspace(0, len(filenames), n_threads + 1).astype(np.int)
     ranges = []    
@@ -193,7 +191,6 @@ def create_tfrecords(config, _type, _prefix, processFun = imgproc.resize_image) 
     processFun: processing function which depends on the problem we are dealing with
     """
     data_dir = config.get_data_dir() 
-    print("the data dir is ", data_dir)   
     image_shape = np.asarray(config.get_image_shape())
     n_threads = config.get_num_threads()    
     #------------- creating train data
