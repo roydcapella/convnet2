@@ -1,3 +1,10 @@
+#catalog, query = run_predict(resnet, 'resnet', tr_dataset, val_dataset, save=True )
+#Si se desea obtener desde disco
+#catalog, query = load_predict_from_disk("resnet")
+
+#print("training catalog lenght ", len(catalog))
+#print("val_dataset query lenght", len(query))
+
 # convnet2
 =======
 # convnet2
