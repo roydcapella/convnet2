@@ -154,7 +154,6 @@ def process_sketch(image, output_size):
     new_image[:,:,0] = one_channel;
     new_image[:,:,1] = one_channel;
     new_image[:,:,2] = one_channel;
-    print ("process_sketch was called")
     return new_image
 
 def process_mnist(image, output_size):
