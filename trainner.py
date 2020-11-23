@@ -46,22 +46,22 @@ if __name__ == '__main__' :
     configuration_file = pargs.config
     configuration = conf.ConfigurationFile(configuration_file, pargs.name)                   
 
-    tfr_train_file = os.path.join(configuration.get_data_dir(), parser.prefix + "train.tfrecords")
-    tfr_test_file = os.path.join(configuration.get_data_dir(), parser.prefix +  "test.tfrecords")
+    tfr_train_file = os.path.join(configuration.get_data_dir(), pargs.prefix + "train.tfrecords")
+    tfr_test_file = os.path.join(configuration.get_data_dir(), pargs.prefix +  "test.tfrecords")
 
     if configuration.use_multithreads() :
-        tfr_train_file=[os.path.join(configuration.get_data_dir(), parser.prefix + "train_{}.tfrecords".format(idx)) for idx in range(configuration.get_num_threads())]
-        tfr_test_file=[os.path.join(configuration.get_data_dir(), parser.prefix + "test_{}.tfrecords".format(idx)) for idx in range(configuration.get_num_threads())]        
+        tfr_train_file=[os.path.join(configuration.get_data_dir(), pargs.prefix + "train_{}.tfrecords".format(idx)) for idx in range(configuration.get_num_threads())]
+        tfr_test_file=[os.path.join(configuration.get_data_dir(), pargs.prefix + "test_{}.tfrecords".format(idx)) for idx in range(configuration.get_num_threads())]        
     sys.stdout.flush()
     
     if pargs.version == '':
-        saved_to = os.path.join(configuration.get_data_dir(), "data", parser.prefix + pargs.arch, pargs.method)
+        saved_to = os.path.join(configuration.get_data_dir(), "data", pargs.prefix + pargs.arch, pargs.method)
     else:
-        saved_to = os.path.join(configuration.get_data_dir(), "data", parser.prefix + pargs.arch, pargs.method, pargs.version)
+        saved_to = os.path.join(configuration.get_data_dir(), "data", pargs.prefix + pargs.arch, pargs.method, pargs.version)
     
     checkpoints_path = os.path.join(saved_to, "checkpoints")
-    mean_file = os.path.join(configuration.get_data_dir(), parser.prefix + "mean.dat")
-    shape_file = os.path.join(configuration.get_data_dir(), parser.prefix + "shape.dat")
+    mean_file = os.path.join(configuration.get_data_dir(), pargs.prefix + "mean.dat")
+    shape_file = os.path.join(configuration.get_data_dir(), pargs.prefix + "shape.dat")
 
     input_shape = np.fromfile(shape_file, dtype=np.int32)
     mean_image = np.fromfile(mean_file, dtype=np.float32)
