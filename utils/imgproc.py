@@ -86,6 +86,8 @@ def resize_image_keeping_aspect(image, output_size):
     return image_out
 
 def image_crop_rgb(image, bg_color, padding = 0):
+    #image_crop_rgb shape 2 1
+
     print("image_crop_rgb len shape", len(image.shape))
     print("image_crop_rgb shape 2", image.shape[2] )
     print("image_crop_rgb len bg_color", len(bg_color))
@@ -149,14 +151,14 @@ def image_crop_gray(image, bg_color, padding = 0):
     return new_image
      
 def process_sketch(image, output_size):
-    print ("process_sketch called")
     new_image = image_crop_rgb(image, (255,255,255), padding = 20)
     new_image = resize_image_keeping_aspect(new_image, output_size)
     one_channel = new_image[:,:,0]
     one_channel = morph.erosion(one_channel, morph.square(3))    
     new_image[:,:,0] = one_channel;
     new_image[:,:,1] = one_channel;
-    new_image[:,:,2] = one_channel;         
+    new_image[:,:,2] = one_channel;
+    print ("process_sketch was called")
     return new_image
 
 def process_mnist(image, output_size):

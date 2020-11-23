@@ -117,7 +117,8 @@ def create_tfrecords_from_file(filenames, labels, image_shape, tfr_filename, pro
     return mean_image
 
 def process_batch_threads(thr_index, ranges, filenames, labels, image_shape, tfr_filename, process_function = imgproc.resize_image):    
-    #create tf-records    
+    #create tf-records  
+    print ("process_batch_threads is called")  
     tfr_filename_batch = '{}_{}.tfrecords'.format(tfr_filename, thr_index)
     mean_filename_batch = '{}_{}_mean.npy'.format(tfr_filename, thr_index)    
     writer = tf.io.TFRecordWriter(tfr_filename_batch)
